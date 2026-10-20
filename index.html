@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-<noscript><style>#intro{display:none}.lock{overflow:auto}.rv{clip-path:none!important;filter:none!important}.word span,.t1{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>#intro{display:none}.lock{overflow:auto}.rv{clip-path:none!important;filter:none!important}.word span,.t1,.gr{opacity:1!important;transform:none!important}</style></noscript>
 <style>
 :root{--ink:#0e0a1a;--violet:#9b5cff;--lav:#cdb4ff;--mist:#ece6f8;--dim:#a197bb;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--ink)}
@@ -142,6 +142,114 @@ body.sh .rv{animation:none!important}body.sh.shdone .rv{clip-path:inset(0)!impor
 .char{transform-origin:56.4% 14.5%!important}
 .zf{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,#c9adff 0%,#6a35d6 30%,#1a1030 70%,var(--ink) 100%)}
 .big{transform-origin:0 50%}
+/* ===== added: tech-flow packets, animated card borders, easter-egg toast ===== */
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:1;background:conic-gradient(from var(--a),transparent 0 58%,rgba(155,92,255,.15) 64%,var(--violet) 82%,var(--lav) 93%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:.5;transition:opacity .4s}
+.card.vw::after{animation:bs 7s linear infinite}
+.card.tt::after,details.card:hover::after,.card:focus-within::after,details.card[open]::after{opacity:1}
+@keyframes bs{to{--a:360deg}}
+.lite .card::after{animation:none!important}
+
+.flow i{--w:2.8rem;position:relative;flex:none;display:inline-block;width:var(--w);height:14px;font-size:0}
+.flow i::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:linear-gradient(90deg,rgba(205,180,255,.12),rgba(205,180,255,.55))}
+.flow i::after{content:"";position:absolute;left:0;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:#ece6f8;box-shadow:0 0 10px 2px rgba(205,180,255,.85),-12px 0 12px -3px rgba(155,92,255,.7);opacity:0}
+.flow.in span{animation:nd 5s ease-in-out infinite}
+.flow.in span:nth-child(3){animation-delay:1s}.flow.in span:nth-child(5){animation-delay:2s}.flow.in span:nth-child(7){animation-delay:3s}.flow.in span:nth-child(9){animation-delay:4s}
+.flow.in i::after{animation:pk 5s cubic-bezier(.45,0,.55,1) infinite}
+.flow.in i:nth-child(4)::after{animation-delay:1s}.flow.in i:nth-child(6)::after{animation-delay:2s}.flow.in i:nth-child(8)::after{animation-delay:3s}
+@keyframes pk{0%{transform:translateX(0) scale(.5);opacity:0}4%{opacity:1}17%{opacity:1}20%,100%{transform:translateX(calc(var(--w) - 7px)) scale(.5);opacity:0}}
+@keyframes nd{0%{border-color:rgba(205,180,255,.3);box-shadow:0 0 0 rgba(155,92,255,0);background:transparent}6%,18%{border-color:#cdb4ff;box-shadow:0 0 24px rgba(155,92,255,.65);background:rgba(155,92,255,.2)}36%,100%{border-color:rgba(205,180,255,.3);box-shadow:0 0 0 rgba(155,92,255,0);background:transparent}}
+@media (max-width:600px){.flow i{--w:1.7rem}}
+
+#eggt{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 6vh);z-index:61;max-width:min(92vw,28rem);padding:.8rem 1.3rem;border-radius:99px;border:1px solid rgba(205,180,255,.4);background:rgba(14,10,26,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--mist);font-size:.92rem;text-align:center;opacity:0;transform:translate(-50%,16px);pointer-events:none;transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.1,1);box-shadow:0 0 40px rgba(124,58,237,.45)}
+#eggt.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.card::after{animation:none!important}.flow span,.flow i::after{animation:none!important}.flow i::after{display:none}#eggt{transition:none}}
+/* ===== added: time greeting + feature card morph panel ===== */
+html{scrollbar-gutter:stable}
+.gr{margin-top:.55rem;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lav);opacity:0;transform:translateY(14px)}
+.gr::before{content:"▲";display:inline-block;font-size:.6em;margin-right:.7em;vertical-align:.15em;color:var(--violet)}
+.go .gr{animation:up 1.2s cubic-bezier(.2,.7,.1,1) 2.5s forwards}
+
+#dp{position:fixed;inset:0;z-index:55;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 4vh) 4vw calc(env(safe-area-inset-bottom,0px) + 4vh);visibility:hidden;pointer-events:none}
+.dpo #dp{visibility:visible;pointer-events:auto}
+.dps{position:absolute;inset:0;background:rgba(8,5,16,.64);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .5s}
+.dpo .dps{opacity:1}
+.dpb{position:relative;display:flex;width:min(36rem,100%);max-height:calc(100svh - 8vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));border-radius:22px;border:1px solid rgba(205,180,255,.3);background:linear-gradient(160deg,#261552,#120c22 72%);box-shadow:0 30px 120px rgba(124,58,237,.38);outline:none;overflow:hidden}
+.dpb::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:conic-gradient(from var(--a),transparent 0 55%,rgba(155,92,255,.2) 62%,var(--violet) 80%,var(--lav) 93%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.dpo .dpb::after{animation:bs 6s linear infinite}.lite .dpb::after{animation:none!important}
+.dpi{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:2rem 2rem 2.2rem}
+.dpx{position:absolute;top:.9rem;right:.9rem;z-index:2;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid rgba(205,180,255,.3);background:rgba(14,10,26,.6);color:var(--mist);font:inherit;font-size:1rem;line-height:1;cursor:pointer;transition:background .3s,transform .4s}
+.dpx:hover{background:rgba(155,92,255,.35);transform:rotate(90deg)}
+.dpg{width:54px;height:54px;font-size:1.6rem;margin-bottom:1.2rem}
+.dph{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;margin-bottom:.9rem;padding-right:2.4rem}
+.dph h3{font:600 clamp(1.5rem,3.2vw,2.1rem)/1.1 Syne,system-ui,sans-serif;letter-spacing:-.02em}
+.dpd{color:var(--mist);font-size:1.05rem;margin-bottom:1.1rem}
+.dpm{color:var(--dim);font-size:.97rem;padding-top:1.1rem;border-top:1px solid rgba(205,180,255,.16)}
+.dpo .dpi>*{animation:dpi .7s cubic-bezier(.2,.7,.1,1) both}
+.dpo .dpi>:nth-child(1){animation-delay:.28s}.dpo .dpi>:nth-child(2){animation-delay:.34s}.dpo .dpi>:nth-child(3){animation-delay:.42s}.dpo .dpi>:nth-child(4){animation-delay:.5s}
+@keyframes dpi{from{opacity:0;transform:translateY(12px)}}
+::view-transition-group(fcard){animation-duration:.7s;animation-timing-function:cubic-bezier(.2,.7,.1,1)}
+::view-transition-old(fcard),::view-transition-new(fcard){width:100%;height:100%}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
+@media (prefers-reduced-motion:reduce){.gr{opacity:1!important;transform:none!important;animation:none!important}.dpo .dpi>*,.dpo .dpb::after{animation:none!important}.dps{transition:none}}
+/* ===== added: status-based card reveals + triangle portal ===== */
+@property --p{syntax:"<percentage>";initial-value:0%;inherits:false}
+.card[data-st]:not(.in){transform:none}
+section[tabindex="-1"],.journey[tabindex="-1"]{outline:none}
+
+/* Available: hologram scan materialise */
+.card[data-st=a] summary::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:linear-gradient(180deg,transparent calc(100% - 90px),rgba(124,58,237,.22) calc(100% - 22px),rgba(205,180,255,.6) calc(100% - 4px),#fff calc(100% - 2px),transparent 100%)}
+.card[data-st=a] summary::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:rgba(205,180,255,.16)}
+.card[data-st=a].in{animation:rA 1.15s cubic-bezier(.65,0,.2,1) var(--d,0s) backwards}
+.card[data-st=a].in summary::before{animation:sA 1.15s cubic-bezier(.65,0,.2,1) var(--d,0s) backwards}
+.card[data-st=a].in summary::after{animation:fA 1.4s ease-out var(--d,0s) backwards}
+.card[data-st=a].in .gl{animation:gP .7s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + .55s) backwards}
+@keyframes rA{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
+@keyframes sA{0%{opacity:1;transform:translateY(-100%)}90%{opacity:1}100%{opacity:0;transform:translateY(0)}}
+@keyframes fA{from{opacity:1}to{opacity:0}}
+@keyframes gP{from{opacity:0;transform:scale(.3) rotate(-40deg)}}
+
+/* Experimental: unstable glitch that stabilises */
+.card[data-st=e] summary::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,rgba(0,225,255,.14) 0 2px,transparent 2px 6px),linear-gradient(90deg,rgba(255,40,120,.12),transparent 40%,rgba(0,225,255,.12))}
+.card[data-st=e].in{animation:rE 1s steps(1,end) var(--d,0s) backwards}
+.card[data-st=e].in summary{animation:tE 1s steps(1,end) var(--d,0s) backwards}
+.card[data-st=e].in summary::before{animation:nE 1s steps(1,end) var(--d,0s) backwards}
+@keyframes rE{0%{opacity:0;transform:translateX(-7px) skewX(-7deg);clip-path:inset(42% 0 42% 0)}9%{opacity:1;transform:translateX(6px);clip-path:inset(6% 0 66% 0)}17%{opacity:.15;transform:translateX(-5px);clip-path:inset(62% 0 8% 0)}27%{opacity:1;transform:translateX(4px) skewX(3deg);clip-path:inset(0)}35%{opacity:.3;transform:none;clip-path:inset(24% 0 28% 0)}45%{opacity:1;transform:translateX(-3px);clip-path:inset(0)}58%{opacity:.65;transform:translateX(2px)}70%,100%{opacity:1;transform:none;clip-path:inset(0)}}
+@keyframes tE{0%,12%{text-shadow:-4px 0 rgba(0,225,255,.85),4px 0 rgba(255,40,120,.85)}20%{text-shadow:3px 0 rgba(0,225,255,.85),-3px 0 rgba(255,40,120,.85)}34%{text-shadow:-2px 0 rgba(0,225,255,.8),2px 0 rgba(255,40,120,.8)}48%{text-shadow:2px 0 rgba(0,225,255,.7),-2px 0 rgba(255,40,120,.7)}60%,100%{text-shadow:0 0 0 transparent,0 0 0 transparent}}
+@keyframes nE{0%{opacity:1}14%{opacity:0}22%{opacity:1}38%{opacity:.3}50%{opacity:1}64%{opacity:.4}78%,100%{opacity:0}}
+.chip.c-e{display:inline-block;animation:ce 4.6s steps(1,end) infinite}
+@keyframes ce{0%,90%,100%{transform:none;opacity:1}92%{transform:translateX(-2px);opacity:.55}95%{transform:translateX(2px);opacity:1}97%{opacity:.5}}
+
+/* In Development: dashed border draws itself, then content fades in */
+.card[data-st=d] summary::before{content:"";position:absolute;inset:0;pointer-events:none;border:1.5px dashed var(--lav);border-radius:18px;opacity:.45;-webkit-mask:conic-gradient(#000 var(--p),transparent 0);mask:conic-gradient(#000 var(--p),transparent 0)}
+.card[data-st=d].in{animation:bD 1.3s ease var(--d,0s) backwards}
+.card[data-st=d].in summary::before{animation:dD 1.3s cubic-bezier(.5,0,.2,1) var(--d,0s) both}
+.card[data-st=d].in summary>*{animation:cD .8s cubic-bezier(.2,.7,.1,1) calc(var(--d,0s) + .8s) backwards}
+@keyframes dD{from{--p:0%;opacity:1}85%{opacity:1}to{--p:100%;opacity:.45}}
+@keyframes bD{from{border-color:transparent;background-color:transparent}}
+@keyframes cD{from{opacity:0;transform:translateY(8px)}}
+
+/* No status (privacy): declassified bar slides away */
+.card[data-st=n] summary::before{content:"DECLASSIFYING";content:"DECLASSIFYING" / "";display:grid;place-items:center;position:absolute;inset:-1px;z-index:2;pointer-events:none;padding-left:.5em;background:linear-gradient(90deg,#0e0a1a,#1a1030);border-right:2px solid var(--lav);color:var(--lav);font:600 .72rem Syne,sans-serif;letter-spacing:.5em;transform:translateX(101%)}
+.card[data-st=n].in summary::before{animation:rN 1.15s cubic-bezier(.7,0,.2,1) calc(var(--d,0s) + .1s) backwards}
+@keyframes rN{0%,22%{transform:translateX(0)}100%{transform:translateX(101%)}}
+
+.lite .card[data-st],.lite .card[data-st] summary,.lite .card[data-st] summary>*,.lite .card[data-st] .gl,.lite .card[data-st] summary::before,.lite .card[data-st] summary::after,.lite .chip.c-e{animation:none!important}
+.lite .card[data-st=d] summary::before{--p:100%}
+@media (prefers-reduced-motion:reduce){.card[data-st],.card[data-st] summary,.card[data-st] summary>*,.card[data-st] .gl,.card[data-st] summary::before,.card[data-st] summary::after,.chip.c-e{animation:none!important}.card[data-st=d] summary::before{--p:100%}}
+
+/* Triangle portal (View Transitions): new section is revealed through an expanding triangle */
+#pt{position:fixed;inset:0;z-index:70;pointer-events:none;display:none;view-transition-name:ptring}
+#pt.on{display:block}
+#pt i{position:absolute;inset:0;animation-duration:.72s;animation-timing-function:cubic-bezier(.6,0,.25,1);animation-fill-mode:both;animation-play-state:paused}
+#pt.run i{animation-play-state:running}
+#pt .r{background:linear-gradient(135deg,#fff,#cdb4ff 45%,#9b5cff);animation-name:pr}
+html.vtp::view-transition-old(root){animation:pold .72s cubic-bezier(.6,0,.25,1) both;transform-origin:var(--cx) var(--cy);mix-blend-mode:normal}
+html.vtp::view-transition-new(root){animation:pnew .72s cubic-bezier(.6,0,.25,1) both;mix-blend-mode:normal}
+html.vtp::view-transition-group(ptring),html.vtp::view-transition-old(ptring),html.vtp::view-transition-new(ptring){animation:none;mix-blend-mode:normal}
+@keyframes pold{to{transform:scale(1.04)}}
+@keyframes pnew{from{clip-path:polygon(var(--cx) calc(var(--cy) - 28px),calc(var(--cx) + 24.248px) calc(var(--cy) + 14px),calc(var(--cx) - 24.248px) calc(var(--cy) + 14px))}to{clip-path:polygon(var(--cx) calc(var(--cy) - calc(var(--s1)*1)),calc(var(--cx) + calc(var(--s1)*0.866)) calc(var(--cy) + calc(var(--s1)*0.5)),calc(var(--cx) - calc(var(--s1)*0.866)) calc(var(--cy) + calc(var(--s1)*0.5)))}}
+@keyframes pr{from{clip-path:polygon(evenodd,var(--cx) calc(var(--cy) - 31px),calc(var(--cx) + 26.846px) calc(var(--cy) + 15.5px),calc(var(--cx) - 26.846px) calc(var(--cy) + 15.5px),var(--cx) calc(var(--cy) - 31px),var(--cx) calc(var(--cy) - 25px),calc(var(--cx) + 21.65px) calc(var(--cy) + 12.5px),calc(var(--cx) - 21.65px) calc(var(--cy) + 12.5px),var(--cx) calc(var(--cy) - 25px))}88%{opacity:1}to{clip-path:polygon(evenodd,var(--cx) calc(var(--cy) - calc(var(--s1)*1.004)),calc(var(--cx) + calc(var(--s1)*0.8695)) calc(var(--cy) + calc(var(--s1)*0.502)),calc(var(--cx) - calc(var(--s1)*0.8695)) calc(var(--cy) + calc(var(--s1)*0.502)),var(--cx) calc(var(--cy) - calc(var(--s1)*1.004)),var(--cx) calc(var(--cy) - calc(var(--s1)*0.996)),calc(var(--cx) + calc(var(--s1)*0.8625)) calc(var(--cy) + calc(var(--s1)*0.498)),calc(var(--cx) - calc(var(--s1)*0.8625)) calc(var(--cy) + calc(var(--s1)*0.498)),var(--cx) calc(var(--cy) - calc(var(--s1)*0.996)));opacity:0}}
 </style>
 </head>
 <body class="lock">
@@ -161,7 +269,7 @@ body.sh .rv{animation:none!important}body.sh.shdone .rv{clip-path:inset(0)!impor
 <section class="chap r"><h2>She lives on your desktop.</h2><p>SIYA is being built as a desktop companion app with Tauri, so she can stay close while you work.</p></section>
 
 <nav class="dots" aria-hidden="true"><i></i><i></i><i></i></nav>
-<div class="tag"><p class="t1">Your AI, Your World.</p><div><a class="cta p" href="#features">Explore Features</a><a class="cta" href="#developer">Meet the Creator</a></div><p class="by">Created by Shravan SG</p></div>
+<div class="tag"><p class="t1">Your AI, Your World.</p><p class="gr">Welcome, explorer</p><div><a class="cta p" href="#features">Explore Features</a><a class="cta" href="#developer">Meet the Creator</a></div><p class="by">Created by Shravan SG</p></div>
 <div class="hint" aria-hidden="true"><span>Scroll</span><i></i></div>
 </div></div>
 <main>
@@ -320,8 +428,97 @@ const AA=[[.45,.2,.95],[.2,.35,1],[.85,.22,.7],[.1,.65,.85],[.45,.2,.95]],AB=[[.
 if(ok)rz();else au.style.display='none';addEventListener('resize',rz);
 const dn=[0,0,0];let l2=0;const lp=now=>{if(ok&&!rm&&!document.hidden&&!document.documentElement.classList.contains('lite')&&scrollY<J.offsetHeight&&now-l2>33){l2=now;draw(now)}chs.forEach((c,i)=>{const o=+c.style.opacity;if(o>.75&&!dn[i]){dn[i]=1;dec(c.querySelector('h2'))}else if(o<.05)dn[i]=0});requestAnimationFrame(lp)};requestAnimationFrame(lp);
 if(fine&&!rm){
-let tg=scrollY,cs=scrollY,run=0;const mxs=()=>document.documentElement.scrollHeight-innerHeight,tk=()=>{cs+=(tg-cs)*.1;if(Math.abs(tg-cs)<.5){cs=tg;run=0}else requestAnimationFrame(tk);scrollTo({top:cs,behavior:'instant'})};
+let tg=scrollY,cs=scrollY,run=0;addEventListener('siya:jump',()=>{tg=cs=scrollY;run=0});const mxs=()=>document.documentElement.scrollHeight-innerHeight,tk=()=>{cs+=(tg-cs)*.1;if(Math.abs(tg-cs)<.5){cs=tg;run=0}else requestAnimationFrame(tk);scrollTo({top:cs,behavior:'instant'})};
 addEventListener('wheel',e=>{if(e.ctrlKey||document.body.classList.contains('lock'))return;e.preventDefault();if(!run)tg=cs=scrollY;tg=Math.max(0,Math.min(mxs(),tg+e.deltaY*(e.deltaMode?32:1)));if(!run){run=1;requestAnimationFrame(tk)}},{passive:false})}
+/* ===== added: card-border viewport gate, tab-away title/favicon, easter egg ===== */
+{
+const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('vw',e.isIntersecting)),{rootMargin:'80px'});
+$$('.card').forEach(c=>io2.observe(c));
+
+/* tab title + favicon when the visitor leaves the tab */
+const T0=document.title,MS=['🔺 Come back…','SIYA is waiting 👀','Hello Siya? 💜'],canIcon=!document.querySelector('link[rel~="icon"]');
+let ilink,fcv,fctx,iv,ti=0;
+if(canIcon){fcv=document.createElement('canvas');fcv.width=fcv.height=64;fctx=fcv.getContext('2d');ilink=document.createElement('link');ilink.rel='icon';ilink.type='image/png';document.head.appendChild(ilink)}
+const icon=a=>{if(!canIcon||!fctx)return;const f=fctx;f.clearRect(0,0,64,64);f.fillStyle='#0e0a1a';f.beginPath();if(f.roundRect)f.roundRect(0,0,64,64,15);else f.rect(0,0,64,64);f.fill();
+f.beginPath();f.moveTo(32,13);f.lineTo(53,49);f.lineTo(11,49);f.closePath();if(a){f.fillStyle='#9b5cff';f.fill()}f.lineWidth=4.5;f.lineJoin='round';f.strokeStyle='#cdb4ff';f.stroke();
+if(a){f.beginPath();f.arc(51,13,9,0,6.283);f.fillStyle='#ff4d8d';f.fill();f.lineWidth=3;f.strokeStyle='#0e0a1a';f.stroke()}
+ilink.href=fcv.toDataURL('image/png')};
+icon(false);
+const away=()=>{clearInterval(iv);if(rm){document.title=MS[0];return}ti=0;const t=()=>{document.title=MS[ti%MS.length];icon(ti%2===0);ti++};t();iv=setInterval(t,1600)};
+const back=()=>{clearInterval(iv);icon(false);if(document.title!==T0){document.title='Welcome back 💜';setTimeout(()=>{if(!document.hidden)document.title=T0},1800)}};
+document.addEventListener('visibilitychange',()=>document.hidden?away():back());
+
+/* easter egg: Konami code, typing "siya" / "hello siya", or tapping the logo 5 times */
+let eggOn=0,tto;
+const toast=m=>{let e=$('#eggt');if(!e){e=document.createElement('div');e.id='eggt';e.setAttribute('role','status');e.setAttribute('aria-live','polite');document.body.appendChild(e)}e.textContent=m;e.classList.remove('on');void e.offsetWidth;e.classList.add('on');clearTimeout(tto);tto=setTimeout(()=>e.classList.remove('on'),4200)};
+const egg=m=>{toast(m);if(rm||eggOn)return;eggOn=1;scan();
+const c=document.createElement('canvas');c.setAttribute('aria-hidden','true');c.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:60;pointer-events:none';
+const D2=Math.min(devicePixelRatio||1,2),w=c.width=innerWidth*D2,h=c.height=innerHeight*D2,g=c.getContext('2d');document.body.appendChild(c);
+const cols=['#9b5cff','#cdb4ff','#7c3aed','#ece6f8','#ff7ac8','#6ee7ff'],ox=w/2,oy=h/2,P2=[],rings=[0,.18,.36];
+for(let i=0;i<140;i++){const a=Math.random()*6.283,v=(4+Math.random()*13)*D2;P2.push({x:ox,y:oy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5*D2,s:(5+Math.random()*11)*D2,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,c:cols[i%6],f:Math.random()<.3,o:1})}
+const t0=performance.now(),tick=now=>{const t=(now-t0)/1000;g.clearRect(0,0,w,h);
+rings.forEach((d,i)=>{const q=(t-d)/1.1;if(q<=0||q>=1)return;const e=1-Math.pow(1-q,3),R=e*Math.hypot(w,h)*.55;g.save();g.globalAlpha=(1-q)*.8;g.strokeStyle=i%2?'#cdb4ff':'#9b5cff';g.lineWidth=(3+6*(1-q))*D2;g.translate(ox,oy);g.rotate(q*1.2*(i%2?1:-1));g.beginPath();for(let k=0;k<3;k++){const a=k*2.0944-1.5708;if(k)g.lineTo(Math.cos(a)*R,Math.sin(a)*R);else g.moveTo(Math.cos(a)*R,Math.sin(a)*R)}g.closePath();g.stroke();g.restore()});
+for(const p of P2){p.vy+=.28*D2;p.vx*=.985;p.vy*=.985;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.o=cl(1-(t-1.6)/1.4);if(p.o<=0)continue;g.save();g.globalAlpha=p.o;g.translate(p.x,p.y);g.rotate(p.r);g.beginPath();g.moveTo(0,-p.s);g.lineTo(p.s*.87,p.s*.5);g.lineTo(-p.s*.87,p.s*.5);g.closePath();if(p.f){g.fillStyle=p.c;g.fill()}else{g.strokeStyle=p.c;g.lineWidth=2*D2;g.stroke()}g.restore()}
+if(t<3.2)requestAnimationFrame(tick);else{c.remove();eggOn=0}};
+requestAnimationFrame(tick)};
+const KS=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];let ki=0,tbuf='';
+addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;const tg=e.target;if(tg&&(/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName)||tg.isContentEditable))return;
+const k=(e.key||'').toLowerCase();
+ki=k===KS[ki]?ki+1:(k===KS[0]?1:0);
+if(ki===KS.length){ki=0;egg('Konami code accepted. Hello, developer 💜');return}
+if(k.length===1){tbuf=(tbuf+k).slice(-10);
+if(tbuf.endsWith('hello siya')){tbuf='';egg('Yes? I’m listening 👂 Wake word accepted.')}
+else if(tbuf.endsWith('siya')){tbuf='';egg('You called my name. Hello! 💜')}}});
+const lg=$('.nav .logo');let lt=0,lc=0;
+if(lg)lg.addEventListener('click',e=>{const n=performance.now();lc=n-lt<900?lc+1:1;lt=n;if(lc>=5){lc=0;e.preventDefault();egg('You found the secret tap. Hello, explorer 💜')}});
+}
+/* ===== added: time-based greeting + feature card morph (View Transitions) ===== */
+{
+const gr=$('.gr');
+if(gr){const hr=new Date().getHours();
+gr.textContent=hr>=5&&hr<12?'Good morning, explorer':hr>=12&&hr<17?'Good afternoon, explorer':hr>=17&&hr<21?'Good evening, explorer':'Up late, explorer? SIYA is awake too';
+new MutationObserver((_,ob)=>{if(document.body.classList.contains('go')){ob.disconnect();setTimeout(()=>dec(gr),2700)}}).observe(document.body,{attributes:true,attributeFilter:['class']})}
+
+if(!rm&&typeof document.startViewTransition==='function'){
+const dp=document.createElement('div');dp.id='dp';dp.setAttribute('role','dialog');dp.setAttribute('aria-modal','true');dp.setAttribute('aria-labelledby','dpt');
+dp.innerHTML='<div class="dps"></div><div class="dpb" tabindex="-1"><button class="dpx" type="button" aria-label="Close details">✕</button><div class="dpi"><span class="gl dpg" aria-hidden="true"></span><div class="dph"><h3 id="dpt"></h3><span class="chip" hidden></span></div><p class="dpd"></p><p class="dpm"></p></div></div>';
+document.body.appendChild(dp);
+const dpb=dp.querySelector('.dpb'),dpi=dp.querySelector('.dpi'),xb=dp.querySelector('.dpx'),pg=dp.querySelector('.dpg'),h3=dp.querySelector('#dpt'),ch=dp.querySelector('.chip'),dd=dp.querySelector('.dpd'),mm=dp.querySelector('.dpm');
+let cur2=null,vb=0;
+const fill=i=>{const [ic,n,s,d,m]=F[i];pg.textContent=ic;h3.textContent=n;ch.hidden=!s;ch.className='chip'+(s?' c-'+s:'');ch.textContent=s?L[s]:'';dd.textContent=d;mm.textContent=m;dpi.scrollTop=0};
+const run=(cb,after)=>{vb=1;const done=()=>{vb=0;if(after)after()};let t;try{t=document.startViewTransition(cb)}catch(e){cb();done();return}t.finished.then(done,done)};
+const openP=card=>{if(vb||cur2)return;const i=$$('#fg .card').indexOf(card);if(i<0)return;cur2=card;fill(i);card.classList.remove('tt');card.style.viewTransitionName='fcard';
+run(()=>{card.style.viewTransitionName='';card.style.visibility='hidden';dpb.style.viewTransitionName='fcard';document.body.classList.add('lock','dpo');xb.focus({preventScroll:true})},()=>{dpb.style.viewTransitionName=''})};
+const shutP=()=>{if(vb||!cur2)return;const card=cur2;dpb.style.viewTransitionName='fcard';
+run(()=>{dpb.style.viewTransitionName='';card.style.visibility='';card.style.viewTransitionName='fcard';document.body.classList.remove('dpo','lock')},()=>{card.style.viewTransitionName='';const sm=card.querySelector('summary');if(sm)sm.focus({preventScroll:true});cur2=null})};
+$('#fg').addEventListener('click',e=>{const sm=e.target.closest('summary');if(!sm)return;e.preventDefault();openP(sm.parentElement)});
+xb.addEventListener('click',shutP);dp.addEventListener('click',e=>{if(!dpb.contains(e.target))shutP()});
+addEventListener('keydown',e=>{if(!cur2)return;if(e.key==='Escape'){e.preventDefault();shutP()}else if(e.key==='Tab'){e.preventDefault();xb.focus()}});
+}
+}
+/* ===== added: status-based card reveals + triangle portal transition ===== */
+{
+$$('#fg .card').forEach((c,i)=>{c.dataset.st=F[i][2]||'n';c.style.setProperty('--d',(i%3*.14).toFixed(2)+'s')});
+
+if(!rm&&typeof document.startViewTransition==='function'){
+const pt=document.createElement('div');pt.id='pt';pt.setAttribute('aria-hidden','true');pt.innerHTML='<i class="r"></i>';document.body.appendChild(pt);
+let pb=0;
+const portal=(a,el)=>{const H=document.documentElement,r=a.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,R=Math.hypot(Math.max(cx,innerWidth-cx),Math.max(cy,innerHeight-cy));
+H.style.setProperty('--cx',cx.toFixed(0)+'px');H.style.setProperty('--cy',cy.toFixed(0)+'px');H.style.setProperty('--s1',(2.08*R).toFixed(0)+'px');
+H.classList.add('vtp');pb=1;
+const end=()=>{H.classList.remove('vtp');pt.className='';pb=0};
+const cb=()=>{pt.className='on';el.scrollIntoView({behavior:'instant',block:'start'});psy=scrollY;vs=0;dispatchEvent(new Event('siya:jump'));if(!el.hasAttribute('tabindex'))el.setAttribute('tabindex','-1');el.focus({preventScroll:true})};
+let t;try{t=document.startViewTransition(cb)}catch(e){cb();end();return}
+t.ready.then(()=>pt.classList.add('run'),()=>{});t.finished.then(end,end)};
+document.addEventListener('click',e=>{
+if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+const a=e.target instanceof Element?e.target.closest('a[href^="#"]'):null;if(!a||a.target||a.hasAttribute('download'))return;
+let id;try{id=decodeURIComponent(a.getAttribute('href').slice(1))}catch(_){return}
+const el=id&&document.getElementById(id);if(!el)return;
+const B=document.body;if(pb||B.classList.contains('lock')||B.classList.contains('dpo')||document.documentElement.classList.contains('lite'))return;
+if(Math.abs(el.getBoundingClientRect().top-60)<innerHeight*.5)return;
+e.preventDefault();history.replaceState(null,'','#'+id);portal(a,el)})}
+}
 }
 const go=()=>{document.body.classList.add('go');setTimeout(()=>document.body.classList.remove('lock'),rm?0:2800)};
 if(rm)go();else{
